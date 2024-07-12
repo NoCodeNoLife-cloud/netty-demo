@@ -10,8 +10,6 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleState;
@@ -90,13 +88,16 @@ public class NettyServerLauncher {
 					// channelPipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4));
 
 					// Add a processor for the String decoder
-					channelPipeline.addLast(new StringDecoder());
+					// channelPipeline.addLast(new StringDecoder());
 
 					// Add String encoder handler
-					channelPipeline.addLast(new StringEncoder());
+					// channelPipeline.addLast(new StringEncoder());
+
+					channelPipeline.addLast(new CustomizedLengthFieldBasedFrameDecoder());
+					channelPipeline.addLast(new NettyCustomizedMessageToMessageCodec());
 
 					// Idle time detection, 0 means no timeout
-					channelPipeline.addLast(new IdleStateHandler(30, 0, 0));
+					channelPipeline.addLast(new IdleStateHandler(9, 0, 0));
 
 					// ChannelDuplexHandler can handle both inbound and outbound messages
 					// Heartbeat mechanism
@@ -113,10 +114,10 @@ public class NettyServerLauncher {
 						}
 					});
 
-					channelPipeline.addLast(new SimpleChannelInboundHandler<String>() {
+					channelPipeline.addLast(new SimpleChannelInboundHandler<HeartbeatPacket>() {
 						@Override
-						protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
-							log.info("server received: " + s);
+						protected void channelRead0(ChannelHandlerContext channelHandlerContext, HeartbeatPacket heartbeatPacket) throws Exception {
+							log.info("Received heartbeat packet: {}", heartbeatPacket);
 						}
 					});
 				}
@@ -183,5 +184,16 @@ public class NettyServerLauncher {
 
 		// Return the ArrayList of EventExecutors
 		return nioEventLoopList;
+	}
+
+	/**
+	 * Entry point of the application.
+	 *
+	 * @param args The command line arguments.
+	 */
+	@SneakyThrows
+	public static void main(String[] args) {
+		NettyServerLauncher nettyServerLauncher = new NettyServerLauncher(8080);
+		nettyServerLauncher.bootStrap();
 	}
 }

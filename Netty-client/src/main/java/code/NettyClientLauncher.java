@@ -9,8 +9,6 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleState;
@@ -24,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class NettyClientLauncher {
@@ -63,8 +60,11 @@ public class NettyClientLauncher {
 					channelPipeline.addLast(loggingHandler);
 
 					// Add a String decoder and String encoder handler
-					channelPipeline.addLast(new StringDecoder());
-					channelPipeline.addLast(new StringEncoder());
+					// channelPipeline.addLast(new StringDecoder());
+					// channelPipeline.addLast(new StringEncoder());
+
+					channelPipeline.addLast(new CustomizedLengthFieldBasedFrameDecoder());
+					channelPipeline.addLast(new NettyCustomizedMessageToMessageCodec());
 
 					// Add an IdleStateHandler for idle time detection
 					channelPipeline.addLast(new IdleStateHandler(0, 3, 0));
@@ -77,14 +77,12 @@ public class NettyClientLauncher {
 							if (evt instanceof IdleStateEvent idleStateEvent) {
 								if (idleStateEvent.state() == IdleState.WRITER_IDLE) {
 									log.info("No data is sent for 3 seconds, send a heartbeat packet");
-									// TODO: Send heartbeat packet
+									ctx.writeAndFlush(new HeartbeatPacket("hello"));
 								}
 							}
 							super.userEventTriggered(ctx, evt);
 						}
 					});
-
-					// TODO: Add handle
 				}
 			});
 
@@ -164,5 +162,16 @@ public class NettyClientLauncher {
 
 		// Return the ArrayList of EventExecutors
 		return nioEventLoopList;
+	}
+
+	/**
+	 * Entry point of the application.
+	 *
+	 * @param args The command line arguments.
+	 */
+	@SneakyThrows
+	public static void main(String[] args) {
+		NettyClientLauncher nettyClientLauncher = new NettyClientLauncher("127.0.0.1", 8080);
+		nettyClientLauncher.bootStrap();
 	}
 }

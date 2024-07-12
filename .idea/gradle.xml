@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/Netty-client" />
+            <option value="$PROJECT_DIR$/common" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -20,6 +21,17 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/Netty-server" />
+            <option value="$PROJECT_DIR$/common" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/common" />
+        <option name="gradleHome" value="" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common" />
           </set>
         </option>
       </GradleProjectSettings>

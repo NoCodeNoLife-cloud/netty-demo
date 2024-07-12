@@ -25,6 +25,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.6")
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
     implementation("ch.qos.logback:logback-core:1.5.6")
+
+    implementation(project(":common"))
 }
 
 tasks.test {
