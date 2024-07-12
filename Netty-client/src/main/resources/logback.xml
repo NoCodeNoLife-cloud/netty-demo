@@ -1,0 +1,92 @@
+<configuration>
+
+    <!-- Settings for standard output -->
+    <appender name="CONSOLE-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%yellow(%thread)] %cyan(%logger{20}).%M\(%F:%L\): %boldMagenta(%msg) %n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--async output-->
+    <!--    <appender name="ASYNC-ALL" class="ch.qos.logback.classic.AsyncAppender">-->
+    <!--        &lt;!&ndash;By default, if 80% of the queue is full, TRACT, DEBUG, and INFO level logs are discarded&ndash;&gt;-->
+    <!--        <discardingThreshold>0</discardingThreshold>-->
+    <!--        &lt;!&ndash;Change the default queue depth, which affects performance. The default value is 256&ndash;&gt;-->
+    <!--        <queueSize>256</queueSize>-->
+    <!--        &lt;!&ndash;Add a maximum of one appender&ndash;&gt;-->
+    <!--        <appender-ref ref="ALL-FILE"/>-->
+    <!--    </appender>-->
+
+    <!-- Settings for file output -->
+    <!--    <appender name="ALL-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+    <!--            <level>ALL</level>-->
+    <!--        </filter>-->
+    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--            &lt;!&ndash; switch log files by day &ndash;&gt;-->
+    <!--            <fileNamePattern>log/all-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+    <!--            &lt;!&ndash; Maximum number of log archive files to keep &ndash;&gt;-->
+    <!--            <maxHistory>30</maxHistory>-->
+    <!--        </rollingPolicy>-->
+    <!--        <encoder>-->
+    <!--            <pattern>%date{yyyy-MM-dd HH:mm:ss} %n [%-5level] [%thread] at [%class.%method] \(%file:%line\) %n > %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+    <!--    <appender name="INFO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+    <!--            <level>INFO</level>-->
+    <!--        </filter>-->
+    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--            &lt;!&ndash; switch log files by day &ndash;&gt;-->
+    <!--            <fileNamePattern>log/info-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+    <!--            &lt;!&ndash; Maximum number of log archive files to keep &ndash;&gt;-->
+    <!--            <maxHistory>30</maxHistory>-->
+    <!--        </rollingPolicy>-->
+    <!--        <encoder>-->
+    <!--            <pattern>%date{yyyy-MM-dd HH:mm:ss} %n [%-5level] [%thread] at [%class.%method] \(%file:%line\) %n > %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+    <!--    <appender name="WARN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+    <!--            <level>WARN</level>-->
+    <!--        </filter>-->
+    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--            &lt;!&ndash; switch log files by day &ndash;&gt;-->
+    <!--            <fileNamePattern>log/warn-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+    <!--            &lt;!&ndash; Maximum number of log archive files to keep &ndash;&gt;-->
+    <!--            <maxHistory>30</maxHistory>-->
+    <!--        </rollingPolicy>-->
+    <!--        <encoder>-->
+    <!--            <pattern>%date{yyyy-MM-dd HH:mm:ss} %n [%-5level] [%thread] at [%class.%method] \(%file:%line\) %n > %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+    <!--    <appender name="ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+    <!--            <level>ERROR</level>-->
+    <!--        </filter>-->
+    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--            &lt;!&ndash; switch log files by day &ndash;&gt;-->
+    <!--            <fileNamePattern>log/error-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+    <!--            &lt;!&ndash; Maximum number of log archive files to keep &ndash;&gt;-->
+    <!--            <maxHistory>30</maxHistory>-->
+    <!--        </rollingPolicy>-->
+    <!--        <encoder>-->
+    <!--            <pattern>%date{yyyy-MM-dd HH:mm:ss} %n [%-5level] [%thread] at [%class.%method] \(%file:%line\) %n > %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+
+
+    <!-- root logger -->
+    <!-- Output DEBUG, INFO, WARN, ERROR level logs -->
+    <root level="INFO">
+        <!-- Output all logger messages to the defined BAR-STDOUT appender -->
+        <appender-ref ref="CONSOLE-STDOUT"/>
+        <!--        <appender-ref ref="ASYNC-ALL"/>-->
+        <!--        <appender-ref ref="INFO-FILE"/>-->
+        <!--        <appender-ref ref="WARN-FILE"/>-->
+        <!--        <appender-ref ref="ERROR-FILE"/>-->
+    </root>
+
+</configuration>
